@@ -1,7 +1,8 @@
-﻿using AutoMapper;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using udemy_dotnet5_rpg.DTOS.Character;
 using udemy_dotnet5_rpg.Models;
 
@@ -43,6 +44,32 @@ namespace udemy_dotnet5_rpg.Services.CharacterService
 			var serviceResponse = new ServiceResponse<GetCharacterDTO>();
 			serviceResponse.Data = _mapper.Map<GetCharacterDTO>(characters.FirstOrDefault(c => c.Id == id));
 			return serviceResponse;
+		}
+
+		public async Task<ServiceResponse<GetCharacterDTO>> UpdateCharacter(UpdateCharacterDTO updatedCharacter)
+		{
+			var serviceReponse = new ServiceResponse<GetCharacterDTO>();
+
+			try
+			{
+				Character character = characters.FirstOrDefault(c => c.Id == updatedCharacter.Id);
+
+				character.Name = updatedCharacter.Name;
+				character.HitPoints = updatedCharacter.HitPoints;
+				character.Strength = updatedCharacter.Strength;
+				character.Defense = updatedCharacter.Defense;
+				character.Intelligence = updatedCharacter.Intelligence;
+				character.Class = character.Class;
+
+				serviceReponse.Data = _mapper.Map<GetCharacterDTO>(character);
+			}
+			catch (Exception ex)
+			{
+				serviceReponse.Success = false;
+				serviceReponse.Message = ex.Message;
+			}
+
+			return serviceReponse;
 		}
 	}
 }
