@@ -32,6 +32,25 @@ namespace udemy_dotnet5_rpg.Services.CharacterService
 			return serviceResponse;
 		}
 
+		public async Task<ServiceResponse<List<GetCharacterDTO>>> DeleteCharacter(int id)
+		{
+			var serviceResponse = new ServiceResponse<List<GetCharacterDTO>>();
+
+			try
+			{
+				Character character = characters.First(c => c.Id == id);
+				characters.Remove(character);
+				serviceResponse.Data = characters.Select(c => _mapper.Map<GetCharacterDTO>(c)).ToList();
+			}
+			catch (Exception ex)
+			{
+				serviceResponse.Success = false;
+				serviceResponse.Message = ex.Message;
+			}
+
+			return serviceResponse;
+		}
+
 		public async Task<ServiceResponse<List<GetCharacterDTO>>> GetAllCharacters()
 		{
 			var serviceResponse = new ServiceResponse<List<GetCharacterDTO>>();
@@ -48,7 +67,7 @@ namespace udemy_dotnet5_rpg.Services.CharacterService
 
 		public async Task<ServiceResponse<GetCharacterDTO>> UpdateCharacter(UpdateCharacterDTO updatedCharacter)
 		{
-			var serviceReponse = new ServiceResponse<GetCharacterDTO>();
+			var serviceResponse = new ServiceResponse<GetCharacterDTO>();
 
 			try
 			{
@@ -61,15 +80,15 @@ namespace udemy_dotnet5_rpg.Services.CharacterService
 				character.Intelligence = updatedCharacter.Intelligence;
 				character.Class = character.Class;
 
-				serviceReponse.Data = _mapper.Map<GetCharacterDTO>(character);
+				serviceResponse.Data = _mapper.Map<GetCharacterDTO>(character);
 			}
 			catch (Exception ex)
 			{
-				serviceReponse.Success = false;
-				serviceReponse.Message = ex.Message;
+				serviceResponse.Success = false;
+				serviceResponse.Message = ex.Message;
 			}
 
-			return serviceReponse;
+			return serviceResponse;
 		}
 	}
 }
