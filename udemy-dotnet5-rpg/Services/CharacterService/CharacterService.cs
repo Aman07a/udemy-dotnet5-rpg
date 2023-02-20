@@ -12,20 +12,25 @@ namespace udemy_dotnet5_rpg.Services.CharacterService
 		   new Character { Id = 1, Name = "Sam"}
 		};
 
-		public async Task<List<Character>> AddCharacter(Character newCharacter)
+		public async Task<ServiceResponse<List<Character>>> AddCharacter(Character newCharacter)
 		{
-			characters.Add(newCharacter);
-			return characters;
+			var serviceResponse = new ServiceResponse<List<Character>>();
+			serviceResponse.Data = characters;
+			return serviceResponse;
 		}
 
-		public async Task<List<Character>> GetAllCharacters()
+		public async Task<ServiceResponse<List<Character>>> GetAllCharacters()
 		{
-			return characters;
+			var serviceResponse = new ServiceResponse<List<Character>>();
+			serviceResponse.Data = characters;
+			return serviceResponse;
 		}
 
-		public async Task<Character> GetCharacterById(int id)
+		public async Task<ServiceResponse<Character>> GetCharacterById(int id)
 		{
-			return characters.FirstOrDefault(c => c.Id == id);
+			var serviceResponse = new ServiceResponse<Character>();
+			serviceResponse.Data = characters.FirstOrDefault(c => c.Id == id);
+			return serviceResponse;
 		}
 	}
 }
