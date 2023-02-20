@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using udemy_dotnet5_rpg.Services.CharacterService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,6 +35,7 @@ namespace udemy_dotnet5_rpg
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "udemy_dotnet5_rpg", Version = "v1" });
 			});
+			services.AddAutoMapper(typeof(Startup));
 			services.AddScoped<ICharacterService, CharacterService>();
 		}
 
