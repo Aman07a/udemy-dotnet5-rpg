@@ -19,6 +19,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Filters;
+using udemy_dotnet5_rpg.Services.WeaponService;
 
 namespace udemy_dotnet5_rpg
 {
@@ -65,6 +66,7 @@ namespace udemy_dotnet5_rpg
 					};
 				});
 			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+			services.AddScoped<IWeaponService, WeaponService>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
