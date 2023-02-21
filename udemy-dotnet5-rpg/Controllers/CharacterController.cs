@@ -5,9 +5,11 @@ using udemy_dotnet5_rpg.DTOS.Character;
 using udemy_dotnet5_rpg.Models;
 using udemy_dotnet5_rpg.Services.CharacterService;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace udemy_dotnet5_rpg.Controllers
 {
+	[Authorize]
 	[Route("api/[controller]")]
 	[ApiController]
 	public class CharacterController : ControllerBase
