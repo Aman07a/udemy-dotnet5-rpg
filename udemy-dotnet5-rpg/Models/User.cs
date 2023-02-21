@@ -1,4 +1,6 @@
-﻿namespace udemy_dotnet5_rpg.Models
+﻿using System.Collections.Generic;
+
+namespace udemy_dotnet5_rpg.Models
 {
 	public class User
 	{
@@ -6,5 +8,6 @@
 		public string Username { get; set; } = string.Empty;
 		public byte[] PasswordHash { get; set; }
 		public byte[] PasswordSalt { get; set; }
+		public List<Character>? Characters { get; set; }
 	}
 }
