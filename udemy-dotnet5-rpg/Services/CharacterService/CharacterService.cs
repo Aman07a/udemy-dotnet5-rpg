@@ -102,18 +102,27 @@ namespace udemy_dotnet5_rpg.Services.CharacterService
 			try
 			{
 				var character = await _context.Characters
+					.Include(c => c.User)
 					.FirstOrDefaultAsync(c => c.Id == updatedCharacter.Id);
 
-				character.Name = updatedCharacter.Name;
-				character.HitPoints = updatedCharacter.HitPoints;
-				character.Strength = updatedCharacter.Strength;
-				character.Defense = updatedCharacter.Defense;
-				character.Intelligence = updatedCharacter.Intelligence;
-				character.Class = character.Class;
+				if (character.User.Id == GetUserId())
+				{
+					character.Name = updatedCharacter.Name;
+					character.HitPoints = updatedCharacter.HitPoints;
+					character.Strength = updatedCharacter.Strength;
+					character.Defense = updatedCharacter.Defense;
+					character.Intelligence = updatedCharacter.Intelligence;
+					character.Class = character.Class;
 
-				await _context.SaveChangesAsync();
+					await _context.SaveChangesAsync();
 
-				serviceResponse.Data = _mapper.Map<GetCharacterDTO>(character);
+					serviceResponse.Data = _mapper.Map<GetCharacterDTO>(character);
+				}
+				else
+				{
+					serviceResponse.Success = false;
+					serviceResponse.Message = "Character not found.";
+				}
 			}
 			catch (Exception ex)
 			{
