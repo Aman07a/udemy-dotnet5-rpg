@@ -49,11 +49,23 @@ namespace udemy_dotnet5_rpg.Services.CharacterService
 
 			try
 			{
-				Character character = await _context.Characters.FirstAsync(c => c.Id == id);
-				_context.Characters.Remove(character);
-				await _context.SaveChangesAsync();
+				Character character = await _context.Characters
+				   .FirstOrDefaultAsync(c => c.Id == id && c.User.Id == GetUserId());
 
-				response.Data = _context.Characters.Select(c => _mapper.Map<GetCharacterDTO>(c)).ToList();
+				if (character != null)
+				{
+					_context.Characters.Remove(character);
+					await _context.SaveChangesAsync();
+
+					response.Data = _context.Characters
+						.Where(c => c.User.Id == GetUserId())
+						.Select(c => _mapper.Map<GetCharacterDTO>(c)).ToList();
+				}
+				else
+				{
+					response.Success = false;
+					response.Message = "Character not found";
+				}
 			}
 			catch (Exception ex)
 			{
@@ -77,7 +89,8 @@ namespace udemy_dotnet5_rpg.Services.CharacterService
 		public async Task<ServiceResponse<GetCharacterDTO>> GetCharacterById(int id)
 		{
 			var serviceResponse = new ServiceResponse<GetCharacterDTO>();
-			var dbCharacter = await _context.Characters.FirstOrDefaultAsync(c => c.Id == id);
+			var dbCharacter = await _context.Characters
+				.FirstOrDefaultAsync(c => c.Id == id && c.User.Id == GetUserId());
 			serviceResponse.Data = _mapper.Map<GetCharacterDTO>(dbCharacter);
 			return serviceResponse;
 		}
