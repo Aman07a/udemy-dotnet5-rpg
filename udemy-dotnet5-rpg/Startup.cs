@@ -18,6 +18,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace udemy_dotnet5_rpg
 {
@@ -40,6 +41,14 @@ namespace udemy_dotnet5_rpg
 			services.AddSwaggerGen(c =>
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "udemy_dotnet5_rpg", Version = "v1" });
+				c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+				{
+					Description = "Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\"",
+					In = ParameterLocation.Header,
+					Name = "Authorization",
+					Type = SecuritySchemeType.ApiKey
+				});
+				c.OperationFilter<SecurityRequirementsOperationFilter>();
 			});
 			services.AddAutoMapper(typeof(Startup));
 			services.AddScoped<ICharacterService, CharacterService>();
