@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using udemy_dotnet5_rpg.Data;
-using udemy_dotnet5_rpg.Services.CharacterService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -19,7 +18,9 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Filters;
+using udemy_dotnet5_rpg.Services.CharacterService;
 using udemy_dotnet5_rpg.Services.WeaponService;
+using udemy_dotnet5_rpg.Services.FightService;
 
 namespace udemy_dotnet5_rpg
 {
@@ -67,6 +68,7 @@ namespace udemy_dotnet5_rpg
 				});
 			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 			services.AddScoped<IWeaponService, WeaponService>();
+			services.AddScoped<IFightService, FightService>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

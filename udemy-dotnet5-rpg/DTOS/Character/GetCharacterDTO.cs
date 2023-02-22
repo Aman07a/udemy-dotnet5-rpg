@@ -16,5 +16,8 @@ namespace udemy_dotnet5_rpg.DTOS.Character
 		public RpgClass Class { get; set; } = RpgClass.Knight;
 		public GetWeaponDTO Weapon { get; set; }
 		public List<GetSkillDTO> Skills { get; set; }
+		public int Fights { get; set; }
+		public int Victories { get; set; }
+		public int Defeats { get; set; }
 	}
 }
