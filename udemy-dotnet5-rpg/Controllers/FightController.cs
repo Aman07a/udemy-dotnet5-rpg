@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using udemy_dotnet5_rpg.DTOS.Fight;
+using udemy_dotnet5_rpg.Models;
 using udemy_dotnet5_rpg.Services.FightService;
 
 namespace udemy_dotnet5_rpg.Controllers
@@ -13,6 +16,12 @@ namespace udemy_dotnet5_rpg.Controllers
 		public FightController(IFightService fightService)
 		{
 			_fightService = fightService;
+		}
+
+		[HttpPost("Weapon")]
+		public async Task<ActionResult<ServiceResponse<AttackResultDTO>>> WeaponAttack(WeaponAttackDTO request)
+		{
+			return Ok(await _fightService.WeaponAttack(request));
 		}
 	}
 }

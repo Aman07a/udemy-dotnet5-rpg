@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using udemy_dotnet5_rpg.DTOS.Character;
@@ -8,6 +9,7 @@ using udemy_dotnet5_rpg.Services.WeaponService;
 
 namespace udemy_dotnet5_rpg.Controllers
 {
+	[Authorize]
 	[Route("api/[controller]")]
 	[ApiController]
 	public class WeaponController : ControllerBase
