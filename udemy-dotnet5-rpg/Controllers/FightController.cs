@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using udemy_dotnet5_rpg.DTOS.Fight;
 using udemy_dotnet5_rpg.Models;
@@ -34,6 +35,12 @@ namespace udemy_dotnet5_rpg.Controllers
 		public async Task<ActionResult<ServiceResponse<FightResultDTO>>> Fight(FightRequestDTO request)
 		{
 			return Ok(await _fightService.Fight(request));
+		}
+
+		[HttpGet]
+		public async Task<ActionResult<ServiceResponse<List<HighscoreDTO>>>> GetHighscore()
+		{
+			return Ok(await _fightService.GetHighscore());
 		}
 	}
 }

@@ -1,19 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using AutoMapper;
 using System.Linq;
 using System.Threading.Tasks;
 using udemy_dotnet5_rpg.Data;
 using udemy_dotnet5_rpg.DTOS.Fight;
 using udemy_dotnet5_rpg.Models;
+using System.Collections.Generic;
 
 namespace udemy_dotnet5_rpg.Services.FightService
 {
 	public class FightService : IFightService
 	{
 		private readonly DataContext _context;
+		private readonly IMapper _mapper;
 
-		public FightService(DataContext context)
+		public FightService(DataContext context, IMapper mapper)
 		{
+			_mapper = mapper;
 			_context = context;
 		}
 
@@ -196,6 +200,22 @@ namespace udemy_dotnet5_rpg.Services.FightService
 				response.Success = false;
 				response.Message = ex.Message;
 			}
+
+			return response;
+		}
+
+		public async Task<ServiceResponse<List<HighscoreDTO>>> GetHighscore()
+		{
+			var characters = await _context.Characters
+				.Where(c => c.Fights > 0)
+				.OrderByDescending(c => c.Victories)
+				.ThenBy(c => c.Defeats)
+				.ToListAsync();
+
+			var response = new ServiceResponse<List<HighscoreDTO>>()
+			{
+				Data = characters.Select(c => _mapper.Map<HighscoreDTO>(c)).ToList()
+			};
 
 			return response;
 		}
